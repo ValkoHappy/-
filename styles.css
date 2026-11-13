@@ -1,0 +1,243 @@
+:root {
+  --bg: #f4f2ee;
+  --surface: #ffffff;
+  --surface-2: #ece9e3;
+  --text: #1d1d1b;
+  --muted: #6b6862;
+  --line: #d9d5cd;
+  --accent: #1f6f5c;
+  --accent-ink: #ffffff;
+  --accent-soft: #dcefe8;
+  --warn: #9a5b00;
+  --warn-soft: #fbefd9;
+  --danger: #b3261e;
+  --call: #8a3ffc;
+  --call-soft: #eee5ff;
+  --sms-bg: #d6e4c8;
+  --sms-ink: #1e2a14;
+  --radius: 12px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141513;
+    --surface: #1e201d;
+    --surface-2: #2a2c28;
+    --text: #ecebe6;
+    --muted: #a3a09a;
+    --line: #3a3c37;
+    --accent: #5cc3a3;
+    --accent-ink: #0d1f19;
+    --accent-soft: #1c3a31;
+    --warn: #f0b45a;
+    --warn-soft: #3a2c14;
+    --danger: #ff8a80;
+    --call: #c3a2ff;
+    --call-soft: #2e2442;
+    --sms-bg: #2f3a27;
+    --sms-ink: #e1f0cf;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+button, input, select { font: inherit; color: inherit; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+[hidden] { display: none !important; }
+
+/* ---- шапка и вкладки ---- */
+.top {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 16px 8px; max-width: 720px; margin: 0 auto;
+}
+.top h1 { font-size: 19px; margin: 0; white-space: nowrap; }
+.contact-pick select {
+  max-width: 50vw; padding: 8px 10px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface);
+}
+.tabs {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; gap: 4px; padding: 6px 16px; max-width: 720px; margin: 0 auto;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  overflow-x: auto; scrollbar-width: none;
+}
+.tabs button {
+  flex: 1 0 auto; padding: 10px 8px; border: 0; border-radius: 10px;
+  background: transparent; color: var(--muted); font-weight: 600; font-size: 15px; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.badge {
+  display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 2px;
+  border-radius: 10px; background: var(--accent); color: var(--accent-ink);
+  font-size: 12px; line-height: 20px; text-align: center;
+}
+
+main { max-width: 720px; margin: 0 auto; padding: 12px 16px 48px; }
+.block { margin-bottom: 20px; }
+.block-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 8px; }
+.muted { color: var(--muted); }
+.center { text-align: center; }
+
+/* ---- кнопки ---- */
+button, .button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 10px 16px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); cursor: pointer;
+}
+button:focus-visible, input:focus-visible, select:focus-visible, .button:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px;
+}
+.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+.ghost { background: transparent; border-style: dashed; color: var(--accent); font-weight: 600; }
+.wide { width: 100%; }
+.small { min-height: 36px; padding: 6px 12px; font-size: 14px; }
+.link { border: 0; background: none; padding: 6px 4px; min-height: 36px; color: var(--accent); font-weight: 600; }
+.link.danger { color: var(--danger); }
+.icon {
+  min-height: 36px; width: 36px; padding: 0; flex: none;
+  border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1;
+}
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.actions > * { flex: 1 1 auto; }
+.actions.minor { justify-content: space-between; margin-top: 4px; }
+.actions.minor > * { flex: 0 0 auto; }
+
+.notice {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px;
+  margin: 0 0 16px; padding: 10px 12px; border-radius: var(--radius);
+  background: var(--warn-soft); color: var(--warn); font-size: 14px;
+}
+
+/* ---- чипы ---- */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips.scroll { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.chip {
+  flex: none; min-height: 36px; padding: 6px 12px; border-radius: 18px;
+  background: var(--surface); border: 1px solid var(--line); font-size: 14px; white-space: nowrap;
+}
+.chip.custom { border-color: var(--accent); }
+.chip.pick b { color: var(--muted); }
+.chip.pick.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip.pick.on b { color: inherit; }
+
+/* ---- конструктор ---- */
+.qcard {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px; margin-bottom: 12px;
+}
+.qhead { display: flex; justify-content: space-between; align-items: center; min-height: 28px; }
+.qlabel { font-weight: 700; font-size: 14px; color: var(--muted); }
+input[type=text], input[type=tel] {
+  width: 100%; min-height: 44px; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg);
+}
+.qtext { font-size: 17px; font-weight: 600; margin: 6px 0 10px; }
+.opts { display: grid; gap: 6px; margin-bottom: 8px; }
+.opt-row { display: flex; align-items: center; gap: 8px; }
+.num {
+  flex: none; width: 32px; height: 32px; border-radius: 8px;
+  display: grid; place-items: center; font-weight: 800;
+  background: var(--accent-soft); color: var(--accent);
+}
+.toggle { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; cursor: pointer; }
+.toggle input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.toggle.inline { padding-bottom: 0; font-size: 14px; color: var(--muted); }
+
+/* ---- превью SMS ---- */
+.preview { margin-top: 16px; }
+.preview-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.counter { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.counter.over { color: var(--warn); font-weight: 700; }
+pre.sms {
+  margin: 0; padding: 12px 14px; border-radius: 6px;
+  background: var(--sms-bg); color: var(--sms-ink);
+  font: 16px/1.35 ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  white-space: pre-wrap; word-break: break-word; min-height: 48px;
+}
+.warn { color: var(--warn); font-size: 14px; margin: 6px 0 0; }
+
+/* ---- ответы ---- */
+.reply-box {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px; margin-bottom: 16px;
+}
+.reply-box label { display: block; font-weight: 600; margin-bottom: 8px; }
+.row { display: flex; gap: 8px; margin-bottom: 8px; }
+.row input { flex: 1; font-size: 20px; }
+.result { margin-top: 10px; padding: 0; border-radius: 10px; font-weight: 600; }
+.result:empty { display: none; }
+.result.ok, .result.warn, .result.call, .result.text { padding: 10px 12px; }
+.result.ok { background: var(--accent-soft); color: var(--accent); }
+.result.warn { background: var(--warn-soft); color: var(--warn); }
+.result.call { background: var(--call-soft); color: var(--call); }
+.result.text { background: var(--surface-2); color: var(--text); }
+
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.timeline li { border-radius: var(--radius); padding: 10px 12px; border: 1px solid var(--line); }
+.timeline .out { background: var(--surface); margin-right: 24px; }
+.timeline .out.open { border-left: 4px solid var(--warn); }
+.timeline .out.answered { border-left: 4px solid var(--accent); }
+.timeline .out.closed { opacity: .65; }
+.timeline .in { background: var(--surface-2); margin-left: 24px; }
+.meta { display: flex; gap: 10px; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.meta .id { font-weight: 700; color: var(--text); }
+.out.open .status { color: var(--warn); font-weight: 600; }
+.out.answered .status { color: var(--accent); font-weight: 600; }
+.oq + .oq { margin-top: 8px; }
+.oqtext { font-weight: 600; margin-bottom: 6px; }
+.callflag {
+  display: inline-block; margin-bottom: 6px; padding: 2px 10px; border-radius: 10px;
+  background: var(--call-soft); color: var(--call); font-weight: 700; font-size: 14px;
+}
+.in .raw { font: 18px/1.3 ui-monospace, Menlo, Consolas, monospace; word-break: break-word; }
+.in .interp { font-size: 14px; margin-top: 4px; }
+.in.ok .interp { color: var(--accent); }
+.in.warn .interp { color: var(--warn); }
+.in.call .interp { color: var(--call); font-weight: 700; }
+.in.text .interp { color: var(--muted); }
+.row-actions { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 6px; }
+
+/* ---- памятка ---- */
+.card {
+  background: var(--surface); border: 2px solid var(--text); border-radius: var(--radius);
+  padding: 16px 18px; font-size: 18px;
+}
+.card h2 { margin: 0 0 10px; font-size: 22px; }
+.card ol { margin: 0; padding-left: 24px; display: grid; gap: 12px; }
+.card pre.sms { margin: 6px 0; font-size: 16px; }
+
+/* ---- настройки ---- */
+.contact-row {
+  display: grid; grid-template-columns: 1fr 1.3fr auto; gap: 6px; align-items: center;
+  padding: 8px; margin-bottom: 8px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--line);
+}
+.contact-row.active { border-color: var(--accent); }
+@media (max-width: 420px) {
+  .contact-row { grid-template-columns: 1fr auto; }
+  .contact-row input[type=tel] { grid-column: 1; grid-row: 2; }
+  .contact-row .icon { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+  max-width: calc(100% - 32px); padding: 12px 16px; border-radius: 12px;
+  background: var(--text); color: var(--bg); font-size: 15px; z-index: 20;
+  box-shadow: 0 6px 20px rgb(0 0 0 / .25);
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+  .top, .tabs, .actions, .muted, .toast, .tab:not(#tab-card) { display: none !important; }
+  #tab-card { display: block !important; }
+  .card { border-color: #000; font-size: 20px; }
+  pre.sms { background: #eee; color: #000; }
+}

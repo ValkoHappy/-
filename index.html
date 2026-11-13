@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f6f5c">
+  <meta name="description" content="Вопросы с вариантами по SMS для кнопочного телефона: собеседник отвечает одной цифрой.">
+  <title>Ответ цифрой</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Ответ цифрой</h1>
+    <label class="contact-pick">
+      <span class="sr">Кому</span>
+      <select id="contactSelect" aria-label="Кому пишем"></select>
+    </label>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="ask" aria-selected="true">Спросить</button>
+    <button role="tab" data-tab="chat" aria-selected="false">Ответы <span id="openBadge" class="badge" hidden></span></button>
+    <button role="tab" data-tab="card" aria-selected="false">Памятка</button>
+    <button role="tab" data-tab="settings" aria-selected="false">Настройки</button>
+  </nav>
+
+  <main>
+    <!-- ============ СПРОСИТЬ ============ -->
+    <section id="tab-ask" class="tab">
+      <p id="noPhone" class="notice" hidden>
+        Номер собеседника не указан — телефон спросит, кому отправить.
+        <button class="link" data-goto="settings">Указать номер</button>
+      </p>
+
+      <div class="block">
+        <div class="block-title">Шаблоны</div>
+        <div id="templates" class="chips scroll"></div>
+      </div>
+
+      <div id="questions"></div>
+      <button id="addQuestion" class="ghost wide">+ Ещё вопрос в это же SMS</button>
+
+      <div class="preview">
+        <div class="preview-head">
+          <span>Так придёт на кнопочный телефон</span>
+          <span id="smsCounter" class="counter"></span>
+        </div>
+        <pre id="preview" class="sms"></pre>
+        <p id="smsWarn" class="warn" hidden></p>
+      </div>
+
+      <div class="actions">
+        <button id="sendBtn" class="primary">Отправить SMS</button>
+        <button id="copyBtn">Копировать</button>
+      </div>
+      <div class="actions minor">
+        <button id="saveTemplate" class="link">Сохранить как шаблон</button>
+        <button id="clearBuilder" class="link">Очистить</button>
+      </div>
+    </section>
+
+    <!-- ============ ОТВЕТЫ ============ -->
+    <section id="tab-chat" class="tab" hidden>
+      <div class="reply-box">
+        <label for="replyInput">Пришёл ответ? Вставьте текст SMS:</label>
+        <div class="row">
+          <input id="replyInput" type="text" inputmode="text" autocomplete="off" placeholder="например: 2">
+          <button id="pasteBtn" title="Вставить из буфера обмена">Вставить</button>
+        </div>
+        <button id="parseBtn" class="primary wide">Разобрать ответ</button>
+        <div id="parseResult" class="result" role="status" aria-live="polite"></div>
+      </div>
+      <ol id="timeline" class="timeline"></ol>
+      <p id="emptyChat" class="muted center">Пока ничего не отправлено.</p>
+    </section>
+
+    <!-- ============ ПАМЯТКА ============ -->
+    <section id="tab-card" class="tab" hidden>
+      <p class="muted">Распечатайте или перепишите и положите рядом с телефоном собеседника.</p>
+      <div id="card" class="card"></div>
+      <div class="actions">
+        <button id="printBtn" class="primary">Распечатать</button>
+        <button id="sendCardBtn">Отправить памятку по SMS</button>
+      </div>
+    </section>
+
+    <!-- ============ НАСТРОЙКИ ============ -->
+    <section id="tab-settings" class="tab" hidden>
+      <div class="block">
+        <div class="block-title">Собеседники</div>
+        <div id="contacts"></div>
+        <button id="addContact" class="ghost wide">+ Добавить собеседника</button>
+      </div>
+
+      <div class="block">
+        <div class="block-title">Как оформлять SMS</div>
+        <label class="toggle"><input type="checkbox" data-setting="numbered">
+          <span><b>Номер вопроса</b> (#12) — можно отвечать на старые вопросы: «12 3»</span></label>
+        <label class="toggle"><input type="checkbox" data-setting="hint">
+          <span><b>Подсказка</b> «Ответ: одна цифра» в конце SMS</span></label>
+        <label class="toggle"><input type="checkbox" data-setting="callZero">
+          <span><b>0 = «позвони мне»</b></span></label>
+        <label class="toggle"><input type="checkbox" data-setting="showCall">
+          <span>Писать строку <b>«0-позвони»</b> в каждом SMS</span></label>
+        <label class="toggle"><input type="checkbox" data-setting="translit">
+          <span><b>Латиницей</b> (Kupit hleb?) — 160 символов в одном SMS вместо 70. Для старых телефонов без русских букв</span></label>
+      </div>
+
+      <div class="block">
+        <div class="block-title">Данные</div>
+        <p class="muted">Всё хранится только в этом браузере.</p>
+        <div class="actions">
+          <button id="exportBtn">Сохранить копию</button>
+          <label class="button">Загрузить копию<input id="importInput" type="file" accept="application/json" hidden></label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/protocol.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
